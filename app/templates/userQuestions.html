@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}User Questions{% endblock %}
+
+{% block content %}
+{% if userQuestions %}
+<h2>All UserQuestions</h2>
+<table border = '1'>
+    <tr>
+        <th>userId</th>
+        <th>questionId</th>
+        <th>interval</th>
+        <th>easiness</th>
+        <th>date</th>
+        <th>repetitions</th>
+    </tr>
+
+    {% for userQuestion in userQuestions %}
+    <tr>
+        <td>{{ userQuestion.userId }}</td>
+        <td>{{ userQuestion.questionId }}</td>
+        <td>{{ userQuestion.interval }}</td>
+        <td>{{ userQuestion.easiness }}</td>
+        <td>{{ userQuestion.date }}</td>
+        <td>{{ userQuestion.repetitions }}</td>
+        <td>
+            <form method="POST" action="{{ url_for('routes.deleteUserQuestion', userId = userQuestion.userId, questionId = userQuestion.questionId) }}">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No UserQuestions found</p>
+{% endif %}
+{% endblock %}

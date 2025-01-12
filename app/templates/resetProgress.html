@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Reset Progress{% endblock %}
+
+
+{% block content %}
+<form method = 'POST' action = "{{ url_for('routes.resetProgress') }}">
+   
+   <h1>Reset Progress</h1>
+   <div class = 'form-group'>
+       <input type = 'number' id = 'userId' name = 'userId' placeholder = 'userId'>
+       <br>
+       <button type = 'submit'><b>Reset Progress</b></button>
+   </div>
+
+
+</form>
+{% endblock %}

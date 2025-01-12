@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Reset Username{% endblock %}
+
+
+{% block content %}
+<form method = 'POST' action = "{{ url_for('routes.resetUsername') }}">
+
+    <div class = 'reset-username-parent-container'>
+        <div class = 'reset-username-content-container'>
+
+            <div class = 'login-exit-button'>
+                <a href = "{{ url_for('routes.profile') }}" class = 'btn'>&times;</a>
+                <!-- allow user to return to profile page -->
+            </div>
+
+            <h1 class = 'reset-username-title'>Reset Username</h1>
+
+            <div class = 'reset-username-body-container'>
+                <input type = 'text' id = 'username' name = 'username' placeholder = 'Username' class = 'reset-username-username'>
+                <button type = 'submit' class = 'reset-username-button'><b>RESET USERNAME</b></button>
+            </div>
+
+        </div>
+    </div>
+
+
+</form>
+{% endblock %}

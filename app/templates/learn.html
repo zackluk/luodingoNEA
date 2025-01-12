@@ -1,0 +1,75 @@
+{% extends 'appBase.html' %}
+{% block title %}Learn{% endblock %}
+
+{% block content %}
+    <form method = 'POST' action = "{{ url_for('routes.learn') }}">
+        <div class='card custom-card'>
+            <div class='card-body'>
+                <h1 class='custom-card-header'>A1: Foundational</h1>
+            </div>
+        </div>
+
+        <div class='container lesson-container'>
+            {% if learnLessons[0] not in userCompletedLessons %}
+                <button type = 'submit' id='button1' name = 'lesson' value = '{{ learnLessons[0] }}' class='lesson-button'>
+                    <div class='pencil-icon'></div>
+                </button>
+            {% else %}
+                <button type = 'submit' id='button1' name = 'lesson' value = '{{ learnLessons[0] }}' class='lesson-completed-button'>
+                    <div class='tick-icon'></div>
+                </button>
+            {% endif %}
+            <p class='lesson-text'>Greetings</p>
+        </div>
+
+        <div class='row'>
+            <div class='col-md-3'>
+                <div class='container lesson-container'>
+                    {% if learnLessons[1] not in userCompletedLessons %}
+                        <button type = 'submit' id='button2' name = 'lesson' value = '{{ learnLessons[1] }}' class='lesson-button'>
+                            <div class='pencil-icon'></div>
+                        </button>
+                    {% else %}
+                        <button type = 'submit' id='button2' name = 'lesson' value = '{{ learnLessons[1] }}' class='lesson-completed-button'>
+                            <div class='tick-icon'></div>
+                        </button>
+                    {% endif %}
+                    <p class='lesson-text'>Self Introduction</p>
+                </div>
+            </div>
+
+            <div class='col-md-6'>
+                <!-- just adding this here so I don't need extra css to space out the buttons lol -->
+            </div>
+
+            <div class='col-md-3'>
+                <div class='container lesson-container'>
+                    {% if learnLessons[2] not in userCompletedLessons %}
+                        <button type = 'submit' id='button3' name = 'lesson' value = '{{ learnLessons[2] }}' class='lesson-button'>
+                            <div class='pencil-icon'></div>
+                        </button>
+                    {% else %}
+                        <button type = 'submit' id='button3' name = 'lesson' value = '{{ learnLessons[2] }}' class='lesson-completed-button'>
+                            <div class='tick-icon'></div>
+                        </button>
+                    {% endif %}
+                    <p class='lesson-text'>Useful Phrases</p>
+                </div>
+            </div>
+
+            <div class='container lesson-container'>
+                {% if learnLessons[3] not in userCompletedLessons %}
+                    <button type = 'submit' id='button4' name = 'lesson' value = '{{ learnLessons[3] }}' class='lesson-button'>
+                        <div class='pencil-icon'></div>
+                    </button>
+                {% else %}
+                    <button type = 'submit' id='button4' name = 'lesson' value = '{{ learnLessons[3] }}' class='lesson-completed-button'>
+                        <div class='tick-icon'></div>
+                    </button>
+                {% endif %}
+                <p class='lesson-text'>Introductory Verbs</p>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

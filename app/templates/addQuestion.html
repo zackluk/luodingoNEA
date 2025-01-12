@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Add Question{% endblock %}
+
+{% block content %}
+<form method='POST' action='{{ url_for("routes.addQuestion") }}'>
+    <h1>Add a Question</h1>
+    <div class='form-group'>
+        <input type='text' id='question' name='question' placeholder='Question'>
+        <br>
+        <input type='text' id='answer' name='answer' placeholder='Answer'>
+        <br>
+
+        <input type='radio' id='multiple-choice' name='questionType' value='multiple-choice'>
+        <label for='multiple-choice'>Multiple Choice</label>
+        <br>
+
+        <input type='radio' id='fill-in-the-blank' name='questionType' value='fill-in-the-blank'>
+        <label for='fill-in-the-blank'>Fill in the Blank</label>
+        <br>
+
+        <input type='radio' id='mouse-navigation' name='questionType' value='mouse-navigation'>
+        <label for='mouse-navigation'>Mouse Navigation</label>
+        <br>
+
+        <input type='radio' id='keyboard-input' name='questionType' value='keyboard-input'>
+        <label for='keyboard-input'>Keyboard Input</label>
+        <br>
+
+        <input type='radio' id='mic-input' name='questionType' value='mic-input'>
+        <label for='mic-input'>Mic Input</label>
+        <br>
+
+        <button type='submit'><b>Create Question</b></button>
+    </div>
+</form>
+
+{% if questions %}
+    <h2>All Questions</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Deck</th>
+            <th>Answer</th>
+            <th>Type</th>
+            <th>Options</th>
+        </tr>
+
+        {% for question in questions %}
+        <tr>
+            <td>{{ question.id }}</td>
+            <td>{{ question.question }}</td>
+            <td>{{ question.answer }}</td>
+            <td>{{ question.questionType }}</td>
+            <td>{{ question.options }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('routes.deleteQuestion', questionId=question.id) }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No questions found.</p>
+{% endif %}
+
+{% endblock %}

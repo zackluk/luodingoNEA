@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Daily Words{% endblock %}
+
+{% block content %}
+{% if dailyWords %}
+<h2>All Daily Words</h2>
+<table border = '1'>
+    <tr>
+        <th>ID</th>
+        <th>word</th>
+        <th>translation</th>
+        <th>sentence</th>
+        <th>fact</th>
+        <th>date</th>
+    </tr>
+
+    {% for word in dailyWords %}
+    <tr>
+        <td>{{ word.id }}</td>
+        <td>{{ word.word }}</td>
+        <td>{{ word.translation }}</td>
+        <td>{{ word.sentence }}</td>
+        <td>{{ word.fact }}</td>
+        <td>{{ word.date }}</td>
+        <td>
+            <form method="POST" action="{{ url_for('routes.deleteDailyWord', wordId = word.id) }}">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No daily words found</p>
+{% endif %}
+{% endblock %}

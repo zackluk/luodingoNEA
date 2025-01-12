@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Create an Account{% endblock %}
+
+
+{% block content %}
+<form method = 'POST' action = "{{ url_for('routes.signUp') }}">
+    <div class = 'sign-up-parent-container'>
+        <div class = 'sign-up-content-container'>
+
+            <div class = 'login-exit-button'>
+                <a href = "{{ url_for('routes.login') }}" class = 'btn'>&times;</a>
+                <!-- allow user to return to login page -->
+            </div>
+
+            <h1 class = 'sign-up-title'>Create an Account</h1>
+
+            <div class = 'sign-up-body-container'>
+                <input type = 'text' id = 'email' name = 'email' placeholder = 'Email' class = 'sign-up-email'>
+                <input type = 'text' id = 'username' name = 'username' placeholder = 'Username' class = 'sign-up-username'>
+                <input type = 'password' id = 'password' name = 'password' placeholder = 'Password' class = 'sign-up-password'>
+                <p class = 'password-requirements'>Passwords must: be 8 characters long and contain 1 capital letter, 1 number and 1 special character.</p>
+                <input type = 'password' id = 'confirmPassword' name = 'confirmPassword' placeholder = 'Confirm Password' class = 'sign-up-confirm-password'>
+                <button type = 'submit' class = 'sign-up-button'><b>CREATE ACCOUNT</b></button>
+            </div>
+
+            <div class = 'sign-up-footer'>
+                <p class = 'sign-up-link-text'>Got an account? <a href = 'login'>Login</a></p>
+            </div>
+        </div>
+    </div>
+
+</form>
+{% endblock %}

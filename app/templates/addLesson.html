@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+<!-- extending from base because the forms are quite similar to login forms -->
+{% block title %}Add Lesson{% endblock %}
+
+{% block content %}
+<form method = 'POST' action = '{{ url_for("routes.addLesson") }}'>
+
+    <h1>Add a Lesson</h1>
+    <div class = 'form-group'>
+        <input type = 'json' id = 'lesson' name = 'lesson' placeholder = 'Lesson'>
+        <br>
+        <input type = 'text' id = 'notes' name = 'lessonType' placeholder = 'Lesson Type'>
+        <br>
+        <input type = 'text' id = 'notes' name = 'notes' placeholder = 'Notes'>
+        <br>
+        <button type = 'submit'><b>Create Lesson</b></button>
+    </div>
+
+</form>
+
+{% if lessons %}
+    <h2>All Lessons</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Deck – elements inside deck are questionIds</th>
+            <th>Lesson Type</th>
+            <th>Notes</th>
+        </tr>
+
+        {% for lesson in lessons %}
+        <tr>
+            <td>{{ lesson.id }}</td>
+            <td>{{ lesson.deck }}</td>
+            <td>{{ lesson.lessonType}}</td>
+            <td>{{ lesson.notes }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('routes.deleteLesson', lessonId=lesson.id) }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No lessons found.</p>
+{% endif %}
+
+{% if questions %}
+    <h2>All Questions</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Deck</th>
+            <th>Answer</th>
+            <th>Type</th>
+            <th>Options</th>
+        </tr>
+
+        {% for question in questions %}
+        <tr>
+            <td>{{ question.id }}</td>
+            <td>{{ question.question }}</td>
+            <td>{{ question.answer }}</td>
+            <td>{{ question.questionType }}</td>
+            <td>{{ question.options }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('routes.deleteQuestion', questionId=question.id) }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No questions found.</p>
+{% endif %}
+
+
+{% endblock %}

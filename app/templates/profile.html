@@ -1,0 +1,39 @@
+{% extends 'appBase.html' %}
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class = 'container profile-container'>
+    <div class = 'profile-box bordered-box'>
+            <h1>Email Address:</h1>
+            <br>
+            <h2>{{ user.email }}</h2>
+
+            <br>
+            <h1>Current Username:</h1>
+            <br>
+            <h2>{{ user.username }}</h2>
+
+            <br>
+            <div class = 'total-xp-container'>
+                <h1 class = 'xp-header'>Total XP:</h1>
+                <h2 class = 'xp-value'>{{ user.progress }} XP</h2>
+            </div>
+
+            <br>
+            <div class = 'language-section-container'>
+                <h1 class = 'language-header'>Language(s):</h1>
+                <img class = 'german-flag-profile' src = 'static/germany.png' alt = 'German Flag'>
+            </div>
+
+    </div>
+
+    <br>
+
+    <form method = 'POST' action = " {{ url_for('routes.profile') }}">
+        <div class = 'change-detail-container'>
+            <button type = 'submit' name = 'action' value = 'change-username' class = 'change-username-button'></button>
+            <button type = 'submit' name = 'action' value = 'change-password' class = 'change-password-button'></button>
+        </div>
+    </form>
+</div>
+{% endblock %}

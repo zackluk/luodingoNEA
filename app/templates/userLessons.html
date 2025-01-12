@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}User Lessons{% endblock %}
+
+{% block content %}
+{% if userLessons %}
+<h2>All UserLessons</h2>
+<table border = '1'>
+    <tr>
+        <th>userId</th>
+        <th>lessonId</th>
+        <th>state</th>
+    </tr>
+
+    {% for userLesson in userLessons %}
+    <tr>
+        <td>{{ userLesson.userId }}</td>
+        <td>{{ userLesson.lessonId }}</td>
+        <td>{{ userLesson.state }}</td>
+        <td>
+            <form method="POST" action="{{ url_for('routes.deleteUserLesson', userId = userLesson.userId, lessonId = userLesson.lessonId) }}">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No userLessons found</p>
+{% endif %}
+{% endblock %}

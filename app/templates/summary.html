@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Lesson Summary{% endblock %}
+
+{% block content %}
+
+<div class = 'summary-page-container'>
+    <div class = 'summary-body-container'>
+        <div class = 'summary-header'>
+            <h1>Lesson Summary</h1>
+        </div>
+
+        <hr>
+    
+        <div class = 'summary-top-row'>
+            <div class = 'summary-accuracy'>
+    
+                <div class = 'summary-accuracy-header'>
+                    <div class = 'summary-target-icon'></div>
+                    <h1>Accuracy</h1>
+                </div>
+
+                <hr>
+    
+                {% if accuracy >= 80 %}
+                    <p class = 'summary-green-accuracy'>{{ accuracy }}%</p>
+                {% elif accuracy >= 60 %}
+                    <p class = 'summary-yellow-accuracy'>{{ accuracy }}%</p>
+                {% elif accuracy >= 50 %}
+                    <p class = 'summary-orange-accuracy'>{{ accuracy }}%</p>
+                {% else %}
+                    <p class = 'summary-red-accuracy'>{{ accuracy }}%</p>
+                {% endif %}
+                <!-- probably a more efficient way, but this is sufficient-->
+            </div>
+            
+            <div class = 'summary-xp'>
+    
+                <div class = 'summary-xp-header'>
+                    <div class = 'summary-xp-icon'></div>
+                    <h1>XP Earned</h1>
+                </div>
+
+                <hr>
+    
+                <p>{{ xp }}</p>
+            </div>
+        </div>
+    
+        {% if lesson.notes %}
+            <div class = 'summary-notes'>
+    
+                <div class = 'summary-notes-header'>
+                    <div class = 'summary-note-icon'></div>
+                    <h1>Notes</h1>
+                </div>
+
+                <hr>
+    
+                <p>{{lesson.notes}}</p>
+            </div>
+        {% endif %}
+        
+        <div class = 'summary-joke'>
+    
+            <div class = 'summary-joke-header'>
+                <div class = 'summary-joke-icon'></div>
+                <h1>Recycled Unfunny Joke</h1>
+            </div>
+
+            <hr>
+    
+            <p>{{ joke }}</p>
+        </div>
+    </div>
+
+    <div class = 'summary-footer'>
+        <form method = 'POST' action = "{{ url_for('routes.summary', lessonId = lesson.id) }}">
+            <button class = 'summary-end-lesson-button'></button>
+            <!-- should redirect to previous page, i.e. grammar or learn page -->
+        </form>
+    </div>
+</div>
+{% endblock %}

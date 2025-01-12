@@ -1,0 +1,84 @@
+{% extends 'appBase.html' %}
+{% block title %}Leaderboard{% endblock %}
+
+{% block content %}
+<div class = 'container leaderboard-page-container'>
+    <div class = 'leaderboard-page-box bordered-box'>
+        <div class = 'leaderboard-page-header'>
+            <h1>All-Time Leaderboard</h1>
+        </div>
+
+        <hr> <!-- should generate a line here -->
+
+        <div class = 'leaderboard-page-body'>
+            <ul>
+                {% for user in rankings %}
+                    <li class = 'leaderboard-page-user'>
+                        {% if user[0] == 0 %}
+                            <div class = 'leaderboard-gold-medal'></div>
+                            <div class = 'leaderboard-user-details'>
+                                <h1 class = 'leaderboard-user-username-1'>{{ user[1] }}</h1>
+                                <h1 class = 'leaderboard-user-xp-1'>{{ user[2] }} XP</h1>
+                            </div>
+                        {% elif user[0] == 1 %}
+                            <div class = 'leaderboard-silver-medal'></div>
+                            <div class = 'leaderboard-user-details'>
+                                <h1 class = 'leaderboard-user-username-2'>{{ user[1] }}</h1>
+                                <h1 class = 'leaderboard-user-xp-2'>{{ user[2] }} XP</h1>
+                            </div>
+                        {% elif user[0] == 2 %}
+                            <div class = 'leaderboard-bronze-medal'></div>
+                            <div class = 'leaderboard-user-details'>
+                                <h1 class = 'leaderboard-user-username-3'>{{ user[1] }}</h1>
+                                <h1 class = 'leaderboard-user-xp-3'>{{ user[2] }} XP</h1>
+                            </div>
+                        {% elif user[0] == 3 %}
+                            <h1 class = 'leaderboard-4th'>4</h1>
+                            <div class = 'leaderboard-user-details'>
+                                <h1 class = 'leaderboard-user-username'>{{ user[1] }}</h1>
+                                <h1 class = 'leaderboard-user-xp'>{{ user[2] }} XP</h1>
+                            </div>
+                        {% else %}
+                            <h1 class = 'leaderboard-5th'>5</h1>
+                            <div class = 'leaderboard-user-details'>
+                                <h1 class = 'leaderboard-user-username'>{{ user[1] }}</h1>
+                                <h1 class = 'leaderboard-user-xp'>{{ user[2] }} XP</h1>
+                            </div>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class = 'leaderboard-page-footer'>
+            <div class = 'leaderboard-page-current-user'>
+                {% if userRank[0] == 1 %}
+                    <div class = 'leaderboard-user-ranking-1'></div>
+                    <div class = 'leaderboard-user-details'>
+                        <h1 class = 'leaderboard-user-username-1'>{{ userRank[1] }}</h1>
+                        <h1 class = 'leaderboard-current-user-xp-1'>{{ userRank[2] }} XP</h1>
+                    </div> 
+                {% elif userRank[0] == 2 %}
+                    <div class = 'leaderboard-user-ranking-2'></div>
+                    <div class = 'leaderboard-user-details'>
+                        <h1 class = 'leaderboard-user-username-2'>{{ userRank[1] }}</h1>
+                        <h1 class = 'leaderboard-current-user-xp-2'>{{ userRank[2] }} XP</h1>
+                    </div> 
+                {% elif userRank [0] == 3 %}
+                    <div class = 'leaderboard-user-ranking-3'></div>
+                    <div class = 'leaderboard-user-details'>
+                        <h1 class = 'leaderboard-user-username-3'>{{ userRank[1] }}</h1>
+                        <h1 class = 'leaderboard-current-user-xp-3'>{{ userRank[2] }} XP</h1>
+                    </div>
+                {% else %}
+                    <h1 class = 'leaderboard-user-ranking'>{{ userRank[0] }}</h1>
+                    <div class = 'leaderboard-user-details'>
+                        <h1 class = 'leaderboard-user-username'>{{ userRank[1] }}</h1>
+                        <h1 class = 'leaderboard-current-user-xp'>{{ userRank[2] }} XP</h1>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

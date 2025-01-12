@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang = 'en'>
+   
+   <head>
+       <meta charset = 'UTF_8'>
+       <meta name = 'viewport' content = 'width = device-width, initial-scale = 1'>
+       <!-- linking to my own css file -->
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous"/>
+       <!-- linking to boostrap here -->
+       <link rel = 'stylesheet' href='{{ url_for("static", filename="style.css") }}'>
+       <link rel = 'shortcut icon' href = '{{ url_for("static", filename = "favicon-16x16.png") }}'>
+        <title>{% block title %}Title{% endblock %}</title>
+   </head>
+
+
+   {% with messages = get_flashed_messages(with_categories=true) %}
+       {% if messages %}
+           {% for category, message in messages %}
+               {% set alertClass = 'alert-danger' if category == 'error' else 'alert-success' %}
+               <!-- rather than needing an if-else block , this just uses one line to set the value of alertClass-->
+               <div class='alert {{ alertClass }} alert-dismissable fade show' role='alert'>
+                   {{ message }}
+                   <button type='button' class='close' data-dismiss='alert'>
+                       <span aria-hidden='true'>&times;</span>
+                   </button>                    
+               </div>
+           {% endfor %}
+       {% endif %}
+   {% endwith %}
+
+
+   <body>
+       {% block content %}Content{% endblock %}
+       <!-- jQuery (required by Bootstrap) -->
+       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+       <!-- Popper.js (required by Bootstrap for tooltips, popovers, etc.) -->
+       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+       <!-- Bootstrap JS -->
+       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+   </body>
+
+
+</html>

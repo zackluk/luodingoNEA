@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous"/>
+   <!-- linking to boostrap here -->
+   <link rel = 'stylesheet' href='{{ url_for("static", filename="style.css") }}'>
+   <link rel = 'shortcut icon' href = '{{ url_for("static", filename = "favicon-16x16.png") }}'>
+  <title>Question</title>
+</head>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+   {% if messages %}
+       {% for category, message in messages %}
+           {% set alertClass = 'alert-danger' if category == 'error' else 'alert-success' %}
+           <!-- rather than needing an if-else block , this just uses one line to set the value of alertClass-->
+           <div class='alert {{ alertClass }} alert-dismissable fade show' role='alert'>
+               {{ message }}
+               <button type='button' class='close' data-dismiss='alert'>
+                   <span aria-hidden='true'>&times;</span>
+               </button>                 
+           </div>
+       {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<body>
+    <div class = 'question-parent-container'>
+        <form id = 'questionForm' class = 'question-main-content' method = 'POST' action = "{{ url_for('routes.question', questionId = question.id, lessonId = lesson.id) }}">
+            <div class = 'question-top-container'>
+                <div class = 'row question-top-bar'>
+                    <div class = 'question-exit-button'>
+                        {% if lesson.lessonType == 'retrieval' %}
+                            <a href = "{{ url_for('routes.retrieval') }}" class = 'btn' onclick='return confirmExit()'>&times;</a>
+                        {% elif lesson.lessonType == 'grammar' %}
+                        <!-- hard coded in for now, weirdly, I get red highlighting when I use the '<' symbol-->
+                            <a href = "{{ url_for('routes.grammar') }}" class = 'btn' onclick='return confirmExit()'>&times;</a>
+                        {% else %}
+                            <a href = "{{ url_for('routes.learn') }}" class = 'btn' onclick='return confirmExit()'>&times;</a>
+                        {% endif %}
+                    </div>
+        
+                    <div class = 'question-progress-wrapper'>
+                        <div class = 'question-progress'>
+                            <div class = 'progress-bar progress-bar-striped question-progress-bar' role = 'progressbar' style = 'width: {{ progress }}%;' aria-valuenow = '0' aria-valuemin = '0' aria-valuemax = '100'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class = 'question-content-container'>
+                <div class = 'question-content-elements-container'>
+                    {% if question.questionType == 'multiple-choice' %}
+                        <div class = 'mc-container'>
+                            <h1> Select the correct meaning </h1>
+                            <p> Wie sagt man "<b> {{ question.question }} </b>" auf Deutsch? </p>
+            
+                            <audio id = 'audio' autoplay controls>
+                                <source src = '{{ audioPath }}' type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                            <br>
+            
+                            <button type = 'button' class = 'option1-button' onclick = 'selectOption("{{ option1 }}")'>{{ option1 }}</button>
+                            <br>
+                            <button type = 'button' class = 'option2-button' onclick = 'selectOption("{{ option2 }}")'>{{ option2 }}</button>
+                            <br>
+                            <button type = 'button' class = 'option3-button' onclick = 'selectOption("{{ option3 }}")'>{{ option3 }}</button>
+                            <br>
+                            <input type = 'hidden' name = 'answer' id = 'selectedOption' value = ''>
+                        </div>
+                    {% elif question.questionType == 'fill-in-the-blank' %}
+                        <div class = 'fitb-container'>
+                            <h1> Fill in the blank </h1>
+                            <p> <b> {{ questionLeft }} </b> <img src = '/static/blank.png' alt = 'blank'> <b> {{ questionRight }}</b></p>
+            
+                            <audio autoplay controls>
+                                <source src = '{{ audioPath }}' type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                            <br>
+            
+                            <button type = 'button' class = 'option1-button' onclick = 'selectOption("{{ option1 }}")'>{{ option1 }}</button>
+                            <br>
+                            <button type = 'button' class = 'option2-button' onclick = 'selectOption("{{ option2 }}")'>{{ option2 }}</button>
+                            <br>
+                            <button type = 'button' class = 'option3-button' onclick = 'selectOption("{{ option3 }}")'>{{ option3 }}</button>
+                            <br>
+                            <input type = 'hidden' name = 'answer' id = 'selectedOption' value = ''>
+                        </div>
+                    {% elif question.questionType == 'keyboard-input' %}
+                        <div class = 'keyboard-input-container'>
+                            <h1> Write this in German </h1>
+                            <p>"{{ question.question }}"</p>
+            
+                            <audio autoplay controls>
+                                <source src = '{{ audioPath }}' type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+            
+                            <br>
+    
+                            <div class = 'keyboard-input-answer-container'>
+                                <textarea id = 'text-box' type = 'text' name = 'answer' placeholder = 'Type here in German' class = 'form-control mb-1 keyboard-input-text-box'></textarea>
+                                <!-- id is text-box so that the javaScript function could work -->
+                            </div>
+            
+                            <br>
+            
+                            <!-- buttons of accents -->
+                            <div class = 'accent-container'>
+                                <button type = 'button' name = 'accent' value = 'Ä' onclick = 'addString("Ä")' class = 'ä-capital-button'></button>
+                                <button type = 'button' name = 'accent' value = 'Ö' onclick = 'addString("Ö")' class = 'ö-capital-button'></button>
+                                <button type = 'button' name = 'accent' value = 'Ü' onclick = 'addString("Ü")' class = 'ü-capital-button'></button>
+                                <button type = 'button' name = 'accent' value = 'ä' onclick = 'addString("ä")' class = 'ä-button'></button>
+                                <button type = 'button' name = 'accent' value = 'ö' onclick = 'addString("ö")' class = 'ö-button'></button>
+                                <button type = 'button' name = 'accent' value = 'ü' onclick = 'addString("ü")' class = 'ü-button'></button>
+                                <button type = 'button' name = 'accent' value = 'ß' onclick = 'addString("ß")' class = 'ß-button'></button>
+                            </div>
+                        </div>
+                    {% elif question.questionType == 'mouse-navigation' %}
+                        <div class = 'mouse-nav-container'>
+                            <h1> Write this in English </h1>
+                            <p>"{{ question.question }}"</p>
+            
+                            <audio autoplay controls>
+                                <source src = '{{ audioPath }}' type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+            
+                            <br>
+    
+                            <div class = 'mouse-nav-button-container'>
+                                <div id = 'button-container' class = 'mouse-nav-answer-button-container'>
+                                    <div class = 'sentence-line top'></div>
+                                    <div class = 'sentence-line bottom'></div>
+                                    <!-- tried to make dynamic lines, but didn't work well. This will work for now.-->
+                                </div>
+                                <!-- in theory will store all the created buttons -->
+    
+                                <br>
+    
+                                <div class = 'mouse-nav-default-button-container'>
+                                    {% for word in answerList %}
+                                        <button type = 'button' name = 'word' value = '{{ word }}' class = 'mouse-nav-button'>{{ word }}</button>
+                                    {% endfor %}
+                                </div>
+                            </div>
+            
+                            <input id = 'text-box' name = 'answer' style = 'display: none;'>
+                            <!-- inviisble text box to track the user's inputs -->
+                        </div>
+                    {% else %}
+                        <div class = 'mic-input-container'>
+                            <!-- mic-input -->
+                            <h1 id = 'speech-title' data-enable-recognition = 'true'>Speak this sentence in German</h1>
+                            <!-- adding custom attribute for this heading, so that microphonoe permission prompt only pops up for mic-input questions -->
+                            <!-- id attribute is also needed for the purpose mentioned on the above comment -->
+            
+                            <audio autoplay controls class = 'speech-audio-container'>
+                                <source src = '{{ audioPath }}' type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+    
+                            <div class = 'speech-prompt-container'>
+                                <p>"{{ question.question }}"</p>
+                            </div>
+                            <!-- modification from the design section, where the question will be in English, and user has to translate to German -->
+    
+                            <h3>Transcription</h3>
+                            <div class = 'transcription-container'>
+                                <p id = 'transcription'></p>
+                            </div>
+    
+                            <br>
+    
+                            <button id = 'toggle-speech' class = 'click-to-speech'></button>
+    
+                            <br>
+    
+                            <button id = 'clear-transcription' class = 'reset-speech'></button>
+            
+                            <input id = 'text-box' type = 'hidden' name = 'answer'>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+    
+        </form>
+    </div>
+
+    <script src = "{{ url_for('static', filename = 'script.js') }}"></script>
+    <!-- moved js code to its own file in script.js -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+<footer class = 'question-footer'>
+    <div class = 'footer-line'></div>
+    <button type = 'button' class = 'check-button' onclick = 'submitForm()'></button>
+</footer>
+  <!-- needed to determine whether the answer is correct or incorrect -->
+
+</html>

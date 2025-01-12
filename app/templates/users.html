@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Users{% endblock %}
+
+{% block content %}
+{% if users %}
+<h2>All Users</h2>
+<table border = '1'>
+    <tr>
+        <th>userId</th>
+        <th>email</th>
+        <th>username</th>
+        <th>password</th>
+        <th>progress</th>
+    </tr>
+
+    {% for user in users %}
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.password }}</td>
+        <td>{{ user.progress }}</td>
+        <td>
+            <form method="POST" action="{{ url_for('routes.deleteUser', userId = user.id) }}">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No users found</p>
+{% endif %}
+{% endblock %}

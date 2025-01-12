@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<form method='POST' action="{{ url_for('routes.login') }}">
+
+    <div class = 'login-parent-container'>
+        <div class='login-content-container'>
+            <h1 class='login-title'>Login</h1>
+     
+             <div class='login-body-container'>
+                <div class = 'login-core-container'>
+                    <input type='text' class='login-username form-control' id='login-username' name='username' placeholder='Username'>
+                    <input type='password' class='login-password form-control' id='login-password' name='password' placeholder='Password'>
+                </div>
+                    
+                <button type='submit' class='login-button'><b>LOGIN</b></button>
+             </div>
+     
+             <div class = 'login-footer'>
+                 <p class='login-link-text login-register-link'>Haven't got an account? <a href='sign-up' class='login-link'>Register</a></p>
+                 <p class='login-link-text login-forgor-link'><a href='forgor-password' class='login-link'>Forgor Password?</a></p>
+             </div>
+        </div>
+    </div>
+
+</form>
+{% endblock %}

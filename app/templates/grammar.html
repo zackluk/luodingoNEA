@@ -1,0 +1,74 @@
+{% extends 'appBase.html' %}
+{% block title %}Learn{% endblock %}
+
+{% block content %}
+    <form method = 'POST' action = "{{ url_for('routes.grammar') }}">
+        <div class='card grammar-card'>
+            <div class='card-body'>
+                <h1 class='custom-card-header'>A1: Foundational</h1>
+            </div>
+        </div>
+
+        <div class='container lesson-container'>
+            {% if grammarLessons[0] not in userCompletedLessons %}
+                <button type = 'submit' id='button1' name = 'lesson' value = '{{ grammarLessons[0] }}' class='grammar-button'>
+                    <div class='book-icon'></div>
+                </button>
+            {% else %}
+                <button type = 'submit' id='button1' name = 'lesson' value = '{{ grammarLessons[0] }}' class='lesson-completed-button'>
+                    <div class='tick-icon'></div>
+                </button>
+            {% endif %}
+            <p class='lesson-text'>Personal Pronouns</p>
+        </div>
+
+        <div class='row'>
+            <div class='col-md-3'>
+                <div class='container lesson-container'>
+                    {% if grammarLessons[1] not in userCompletedLessons %}
+                        <button type = 'submit' id='button2' name = 'lesson' value = '{{ grammarLessons[1] }}' class='grammar-button'>
+                            <div class='book-icon'></div>
+                        </button>
+                    {% else %}
+                        <button type = 'submit' id='button2' name = 'lesson' value = '{{ grammarLessons[1] }}' class='lesson-completed-button'>
+                            <div class='tick-icon'></div>
+                        </button>
+                    {% endif %}
+                    <p class='lesson-text'>'sein'</p>
+                </div>
+            </div>
+
+            <div class='col-md-6'>
+            </div>
+
+            <div class='col-md-3'>
+                <div class='container lesson-container'>
+                    {% if grammarLessons[2] not in userCompletedLessons %}
+                        <button type = 'submit' id='button3' name = 'lesson' value = '{ {grammarLessons[2] }}' class='grammar-button'>
+                            <div class='book-icon'></div>
+                        </button>
+                    {% else %}
+                        <button type = 'submit' id='button3' name = 'lesson' value = '{{ grammarLessons[2] }}' class='lesson-completed-button'>
+                            <div class='tick-icon'></div>
+                        </button>
+                    {% endif %}
+                    <p class='lesson-text'>'haben'</p>
+                </div>
+            </div>
+
+            <div class='container lesson-container'>
+                {% if grammarLessons[3] not in userCompletedLessons %}
+                    <button type = 'submit' id='button4' name = 'lesson' value = '{{ grammarLessons[3] }}' class='grammar-button'>
+                        <div class='book-icon'></div>
+                    </button>
+                {% else %}
+                    <button type = 'submit' id='button4' name = 'lesson' value = '{{ grammarLessons[3] }}' class='lesson-completed-button'>
+                        <div class='tick-icon'></div>
+                    </button>
+                {% endif %}
+                <p class='lesson-text'>Articles</p>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

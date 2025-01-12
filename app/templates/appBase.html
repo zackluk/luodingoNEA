@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang = 'en'>
+
+<head>
+   <meta charset = 'UTF-8'>
+   <meta name = 'viewport' content = 'width=device-width, initial-scale=1'>
+   <!-- Linking to your own CSS file -->
+   <link rel = 'stylesheet' href = 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity = 'sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin = 'anonymous' />
+   <link rel = 'stylesheet' href = 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' crossorigin = 'anonymous' />
+   <!-- Linking to Bootstrap Icons -->
+   <link href = 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css' rel = 'stylesheet'>
+   <link rel = 'stylesheet' href = '{{ url_for("static", filename = "style.css") }}'>
+   <link rel = 'shortcut icon' href = '{{ url_for("static", filename = "favicon-16x16.png") }}'>
+   <title>{% block title %}Title{% endblock %}</title>
+</head>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+   {% if messages %}
+       {% for category, message in messages %}
+           {% set alertClass = 'alert-danger' if category == 'error' else 'alert-success' %}
+           <!-- rather than needing an if-else block , this just uses one line to set the value of alertClass-->
+           <div class='alert {{ alertClass }} alert-dismissable fade show' role='alert'>
+               {{ message }}
+               <button type='button' class='close' data-dismiss='alert'>
+                   <span aria-hidden='true'>&times;</span>
+               </button>                 
+           </div>
+       {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<body class = 'custom-background'>
+
+    <div class = 'container-fluid'>
+        <div class = 'row'>
+            <!-- Left Column -->
+            <div class = 'col-md-3'>
+                <nav class = 'navbar'>
+                    <div class = 'navbar-container'>
+                        <h1 class = 'navbarTitle'>luodingo</h1>
+                        <ul>
+                            <li><a href = 'learn'><i class = 'home-nav'></i>Learn</a></li>
+                            <li><a href = 'grammar'><i class = 'pen-nav'></i>Grammar</a></li>
+                            <li><a href = 'retrieval'><i class = 'brain-nav'></i>Retrieval</a></li>
+                            <li><a href = 'leaderboard'><i class = 'leaderboard-nav'></i>Leaderboard</a></li>
+                            <li><a href = 'profile'><i class = 'profile-nav'></i>Profile</a></li>
+                            <li><a href = 'logout'><i class = 'logout-nav'></i>Log Out</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+    
+            <!-- Middle Column -->
+            <div class = 'col-md-6 middle-col'>
+                {% block content %}Content{% endblock %}
+            </div>
+    
+            <!-- Right Column with padding adjusted -->
+            <div class = 'col-md-3'>
+                <div class = 'top-right-bar'>
+                    <div class = 'row'>
+                        <img class = 'german-flag' src = 'static/germany.png' alt = 'German Flag'>
+                        <div class = 'card progress-bar'>
+                            <div class = 'card-body'>
+                                <div class = 'right-bar-progress-wrapper'>
+                                    <div class = 'right-bar-progress'>
+                                        <div class = 'progress-bar progress-bar-striped right-bar-progress-bar' role = 'progressbar' style = 'width: {{ rightBarData[1] }}%;' aria-valuenow = '0' aria-valuemin = '0' aria-valuemax = '100'>
+                                            <p class = 'right-bar-progress-percentage'>{{ rightBarData[1] }}%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Leaderboard-box content -->
+                <div class = 'leaderboard-box bordered-box'>
+                    <div class = 'leaderboard-box-header'>
+                        {% if rightBarData[0] == 1 %}
+                            <div class = 'leaderboard-box-gold-medal'></div>
+                            <h1 class = 'leaderboard-user-username-1'>Rank 1</h1>
+                        {% elif rightBarData[0] == 2 %}
+                            <div class = 'leaderboard-box-silver-medal'></div>
+                            <h1 class = 'leaderboard-user-username-2'>Rank 2</h1>
+                        {% elif rightBarData[0] == 3 %}
+                            <div class = 'leaderboard-box-bronze-medal'></div>
+                            <h1 class = 'leaderboard-user-username-3'>Rank 3</h1>
+                        {% else %}
+                            <h1 class = 'leaderboard-box-position'>{{ rightBarData[0] }}</h1>
+                            <h1 class = 'leaderboard-user-username'> Rank {{ rightBarData[0] }}</h1>
+                        {% endif %}
+
+                        <p class = 'leaderboard-box-view-leaderboard'><a href = 'leaderboard'>View Leaderboard</a></p>
+                    </div>
+
+                    <div class = 'leaderboard-box-body'>
+                        {% if rightBarData[0] == 1 %}
+                            <p>You currently have the most XP!</p>
+                        {% elif rightBarData[0] ==  2 %}
+                            <p>You currently have the second most XP!</p>
+                        {% elif rightBarData[0] == 3 %}
+                            <p>You currently have the third most XP! </p>
+                        {% else %}
+                            <p>You are currently {{ rightBarData[0] - 3 }} positions away from top 3!</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class = 'daily-word bordered-box'>
+                    <div class = 'daily-word-header'>
+                        <div class = 'daily-word-icon'></div>
+                        <h1 class = 'daily-word-title'>Word of the Day</h1>
+                    </div>
+                    <div class = 'daily-word-body'>
+                        <h2 class = 'daily-word-word'>{{ rightBarData[2].word }}</h2>
+                        <p>Translation: {{ rightBarData[2].translation }}</p>
+                        <p>Sentence: {{ rightBarData[2].sentence }}</p>
+                        {% if rightBarData[2].fact %}
+                            <p>Fun Fact: {{ rightBarData[2].fact }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>    
+
+   <!-- jQuery (required by Bootstrap) -->
+   <script src = 'https://code.jquery.com/jquery-3.5.1.slim.min.js'></script>
+   <!-- Popper.js (required by Bootstrap for tooltips, popovers, etc.) -->
+   <script src = 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js'></script>
+   <!-- Bootstrap JS -->
+   <script src = 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js'></script>
+</body>
+
+</html>
