@@ -693,8 +693,6 @@ def question(lessonId, questionId):
 
         options = json.loads(question.options)
 
-        print(options)
-
         random.shuffle(options)
         #added this such that the orientation of the blocks will not be too obvious
 
@@ -806,6 +804,9 @@ def summary(lessonId):
     #subtraction inside brackets is finding the error rate
     #* 100 to get a percentage for error rate
     #100 - error rate to get accuracy
+
+    if accuracy < 0:
+        accuracy = 0
 
     xp = 0
 

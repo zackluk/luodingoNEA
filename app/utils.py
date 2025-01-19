@@ -241,7 +241,7 @@ def firstReview(question, quality):
    updateRecall(question, reviewData)
 
 def decideQuestionXP(userQuestion):
-   if userQuestion.repetitions == 1:
+   if userQuestion.easiness == 2.6:
       return 2
    
    else:
