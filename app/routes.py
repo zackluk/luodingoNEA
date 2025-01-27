@@ -50,45 +50,56 @@ def login():
 @routes.route('/sign-up', methods = ['GET', 'POST'])
 @routes.route('/create-an-account', methods = ['GET', 'POST'])
 def signUp():
-   if request.method == 'POST':
-       email = request.form.get('email')
-       username = request.form.get('username')
-       password = request.form.get('password')
-       confirmPassword = request.form.get('confirmPassword')
+    if request.method == 'POST':
+        email = request.form.get('email')
+        username = request.form.get('username')
+        password = request.form.get('password')
+        confirmPassword = request.form.get('confirmPassword')
 
-       errors = []
+        errors = []
 
-       if not validateEmail(email):
-           errors.append('Invalid Email')
+        if email == '':
+           errors.append('Email cannot be left empty!')
 
-       if notUniqueUsername(username):
-           errors.append('Username already taken')
+        if username == '':
+            errors.append('Username cannot be empty!')
 
-       if password != confirmPassword:
-           errors.append('Passwords do not match')
+        if password == '':
+            errors.append('Password must not be left empty!')
 
-       if not validatePassword(password):
-           errors.append('Invalid Password')
+        if not validateEmail(email):
+            errors.append('Invalid Email')
 
-       if errors:
-           for error in errors:
-               flash(error, category = 'error')
-           return render_template('signUp.html')
+        if notUniqueUsername(username):
+            errors.append('Username already taken')
 
-       else:
-           newUser = User(email = email, username = username, password = generate_password_hash(password), progress = 0)
+        if password != confirmPassword:
+            errors.append('Passwords do not match')
 
-           db.session.add(newUser)
-           #adding new user entry
-           db.session.commit()
+        if not validatePassword(password):
+            errors.append('Invalid Password')
 
-           flash('Account created, login to start learning!', category = 'success')
-           #provides a confirmation message when account is created successfully
+        print(errors)
 
-           return redirect(url_for('routes.login'))
-           #get user to login with their just-created login credentials
+        if errors:
+            for error in errors:
+                flash(error, category = 'error')
+            return render_template('signUp.html')
 
-   return render_template('signUp.html')
+        else:
+            newUser = User(email = email, username = username, password = generate_password_hash(password), progress = 0)
+
+            db.session.add(newUser)
+            #adding new user entry
+            db.session.commit()
+
+            flash('Account created, login to start learning!', category = 'success')
+            #provides a confirmation message when account is created successfully
+
+            return redirect(url_for('routes.login'))
+            #get user to login with their just-created login credentials
+
+    return render_template('signUp.html')
 
 
 @routes.route('/logout')
