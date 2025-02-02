@@ -195,10 +195,19 @@ function createNewButton(string) {
     }
 }
 
-function selectOption(value){
+function selectOption(button, value) {
+    // Remove selection from all buttons
+    document.querySelectorAll('.option-button').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    
+    // Add selection to clicked button
+    button.classList.add('selected');
+    
     const userInput = document.getElementById('selectedOption');
     userInput.value = value;
-    //directly setting the value of the input to be the one of the new selected option
+    
+    console.log('Selected:', value);
 }
 
 function submitForm(){

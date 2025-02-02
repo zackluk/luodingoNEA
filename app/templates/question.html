@@ -64,11 +64,11 @@
                             </audio>
                             <br>
             
-                            <button type = 'button' class = 'option1-button' onclick = 'selectOption("{{ option1 }}")'>{{ option1 }}</button>
+                            <button type = 'button' class = 'option-button option1-button' onclick = 'selectOption(this, "{{ option1 }}")'>{{ option1 }}</button>
                             <br>
-                            <button type = 'button' class = 'option2-button' onclick = 'selectOption("{{ option2 }}")'>{{ option2 }}</button>
+                            <button type = 'button' class = 'option-button option2-button' onclick = 'selectOption(this, "{{ option2 }}")'>{{ option2 }}</button>
                             <br>
-                            <button type = 'button' class = 'option3-button' onclick = 'selectOption("{{ option3 }}")'>{{ option3 }}</button>
+                            <button type = 'button' class = 'option-button option3-button' onclick = 'selectOption(this, "{{ option3 }}")'>{{ option3 }}</button>
                             <br>
                             <input type = 'hidden' name = 'answer' id = 'selectedOption' value = ''>
                         </div>
@@ -83,11 +83,11 @@
                             </audio>
                             <br>
             
-                            <button type = 'button' class = 'option1-button' onclick = 'selectOption("{{ option1 }}")'>{{ option1 }}</button>
+                            <button type = 'button' class = 'option-button option1-button' onclick = 'selectOption(this, "{{ option1 }}")'>{{ option1 }}</button>
                             <br>
-                            <button type = 'button' class = 'option2-button' onclick = 'selectOption("{{ option2 }}")'>{{ option2 }}</button>
+                            <button type = 'button' class = 'option-button option2-button' onclick = 'selectOption(this, "{{ option2 }}")'>{{ option2 }}</button>
                             <br>
-                            <button type = 'button' class = 'option3-button' onclick = 'selectOption("{{ option3 }}")'>{{ option3 }}</button>
+                            <button type = 'button' class = 'option-button option3-button' onclick = 'selectOption(this, "{{ option3 }}")'>{{ option3 }}</button>
                             <br>
                             <input type = 'hidden' name = 'answer' id = 'selectedOption' value = ''>
                         </div>
@@ -173,9 +173,12 @@
                             <h3>Transcription</h3>
                             <div class = 'transcription-container'>
                                 <p id = 'transcription'></p>
+                                <br>
                             </div>
-    
+
                             <br>
+
+                            <p class = 'speech-warning'>Warning: Possible small delays when recognising speech!</p>
     
                             <button id = 'toggle-speech' class = 'click-to-speech'></button>
     

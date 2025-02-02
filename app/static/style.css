@@ -780,88 +780,42 @@ body.custom-background {
    background-repeat: no-repeat;
 }
 
-.option1-button{
-   background:url('option1.svg') no-repeat center center;
+.option-button {
    background-color: transparent;
    background-size: cover;
    width: 800px;
-   height:80px;
+   height: 80px;
    text-align: center;
    font-size: 30px;
    cursor: pointer;
    color: #C1CBD1;
    border-radius: 10px;
-   border-color: transparent;
+   border: none;
+   margin: 5px 0;
 }
 
-.option1-button:active{
-   background:url('selectedOption1.svg') no-repeat center center;
-   background-color: transparent;
-   background-size: cover;
-   width: 800px;
-   height:80px;
-   text-align: center;
-   font-size: 30px;
-   cursor: pointer;
+.option1-button {
+   background-image: url('option1.svg');
+}
+.option2-button { 
+   background-image: url('option2.svg');
+}
+.option3-button {
+   background-image: url('option3.svg');
+}
+
+.option-button.selected {
    color: #49BFF7;
-   border-radius: 10px;
-   border-color: transparent;
 }
 
-.option2-button{
-   background:url('option2.svg') no-repeat center center;
-   background-color: transparent;
-   background-size: cover;
-   width: 800px;
-   height:80px;
-   text-align: center;
-   font-size: 30px;
-   cursor: pointer;
-   color: #C1CBD1;
-   border-radius: 10px;
-   border-color: transparent;
+.option1-button.selected {
+   background-image: url('selectedOption1.svg');
 }
-
-.option2-button:active{
-   background:url('selectedOption2.svg') no-repeat center center;
-   background-color: transparent;
-   background-size: cover;
-   width: 800px;
-   height:80px;
-   text-align: center;
-   font-size: 30px;
-   cursor: pointer;
-   color: #49BFF7;
-   border-radius: 10px;
-   border-color: transparent;
+.option2-button.selected {
+   background-image: url('selectedOption2.svg');
 }
-
-.option3-button{
-   background:url('option3.svg') no-repeat center center;
-   background-color: transparent;
-   background-size: cover;
-   width: 800px;
-   height:80px;
-   text-align: center;
-   font-size: 30px;
-   cursor: pointer;
-   color: #C1CBD1;
-   border-radius: 10px;
-   border-color: transparent;
-}
-
-.option3-button:active{
-   background:url('selectedOption3.svg') no-repeat center center;
-   background-color: transparent;
-   background-size: cover;
-   width: 800px;
-   height:80px;
-   text-align: center;
-   font-size: 30px;
-   cursor: pointer;
-   color: #49BFF7;
-   border-radius: 10px;
-   border-color: transparent;
+.option3-button.selected {
+   background-image: url('selectedOption3.svg');
 }
 
 .check-button{
@@ -1256,6 +1210,11 @@ body.custom-background {
    border: 3px solid #37464F;
    border-radius: 10px;
    box-sizing: border-box;
+}
+
+.speech-warning {
+   color:#FF4B4B;
+   font-size: 10px;
 }
 
 .mouse-nav-button-container, .mouse-nav-answer-button-container{

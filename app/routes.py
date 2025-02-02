@@ -631,6 +631,11 @@ def question(lessonId, questionId):
     progress = session['progress']
     progressPercentage = (progress['completedQuestions'] / progress['totalQuestions']) * 100
 
+    currentList = session['lessonDeck']
+    currentQuestionId = currentList[0]
+    if questionId != currentQuestionId:
+        return redirect(url_for('routes.question', lessonId=lessonId, questionId=currentQuestionId))
+
     if request.method == 'POST':
 
         userAnswer = request.form.get('answer')
@@ -720,6 +725,10 @@ def result(lessonId, questionId, result):
 
     currentList = session['lessonDeck']
     progress = session['progress']
+
+    currentQuestionId = currentList[0]
+    if questionId != currentQuestionId:
+        return redirect(url_for('routes.question', lessonId=lessonId, questionId=currentQuestionId))
 
     if request.method == 'POST':
         if question.questionType == 'mic-input':    
